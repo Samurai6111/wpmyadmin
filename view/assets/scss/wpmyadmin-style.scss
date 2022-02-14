@@ -1,0 +1,118 @@
+@charset 'UTF-8';
+
+//____________________________
+//読み込み
+//____________________________
+@import 'configuration';
+
+@import 'modifier';
+
+@import 'reset';
+
+//____________________________
+//スタイル
+//____________________________
+.wpmyadmin {
+	padding: 32px 16px;
+
+	.wpmyadmin__form {
+		// ---------- ボタン ----------
+		.wpmyadmin__formButton {
+			display: block;
+			width: 100%;
+			height: 100%;
+			text-align: left;
+		}
+	}
+
+	// ---------- テーブル ----------
+	.wpmyadminTable {
+		// ---------- tr ----------
+		.wpmyadminTable__tr {
+			th ,
+			td {
+				padding: 4px 8px;
+				border: 1px solid #000000;
+			}
+
+			// ---------- head ----------
+			.wpmyadminTable__head {
+				color: #ffffff;
+				background-color: #000000;
+
+				* {
+					color: #ffffff;
+				}
+			}
+
+			// ---------- desc ----------
+			.wpmyadminTable__desc {
+				.wpmyadminTable__flex {
+					@include flex;
+					align-items: center;
+					justify-content: center;
+					min-width: 90px;
+
+					input {
+						margin-right: 0.8rem;
+					}
+				}
+
+				&.-w100 {
+					& > * {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+
+// ---------- サイドバー ----------
+.wpmyadminSidebar {
+	position: fixed;
+	top: 50%;
+	right: 0;
+	z-index: 10000;
+	max-height: 50vh;
+	padding: 0.4rem;
+	// width: 30px;
+	overflow: scroll;
+	background-color: #ffffff;
+	border-radius: 16px 0 0 16px;
+	transform: translate(calc(100% - 40px), -50%);
+	transition: 0.3s;
+
+	&:hover {
+		width: auto;
+		// transition: 0.3s;
+		transform: translate(0, -50%);
+		cursor: pointer;
+	}
+
+	.wpmyadmin__form {
+		@include flex;
+		align-items: flex-start;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+}
+
+.-tal {
+	text-align: left;
+}
+
+// ---------- ページネーション ----------
+.wpmyadminPagination {
+	@include flex;
+	align-items: center;
+	margin-top: 1.6rem;
+
+	.wpmyadminPagination__select {
+		margin-right: 2.4rem;
+	}
+
+	.wpmyadminPagination__list {
+		@include flex;
+	}
+}
