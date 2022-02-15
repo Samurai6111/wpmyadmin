@@ -64,8 +64,8 @@ function wpmyadmin_get_current_link()
 {
 
   $link = is_ssl() ? 'https' : 'http' . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-  $link_esc = esc_url($link);
-  return ($link_esc);
+  // $link_esc = esc_url($link);
+  return ($link);
 }
 
 /**

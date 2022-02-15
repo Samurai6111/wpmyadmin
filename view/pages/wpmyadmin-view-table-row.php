@@ -1,5 +1,6 @@
 <?php
 include($wpmyadmin_path . "/controller/wpmyadmin-controller-row.php");
+include($wpmyadmin_path . "/model/actions/wpmyadmin-update.php");
 ?>
 
 <h1><?php wpmyadmin_breadcrumb() ?></h1>
@@ -7,6 +8,7 @@ include($wpmyadmin_path . "/controller/wpmyadmin-controller-row.php");
 
 <form action="<?php echo wpmyadmin_get_current_link() ?>"
       method="POST">
+
 
   <table class="wpmyadminTable -w100">
     <?php foreach ($table_row[0] as $table_key => $table_value) {

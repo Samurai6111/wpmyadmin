@@ -13,7 +13,7 @@ if (isset($_POST['wpmyadminUpdateTrigger'])) {
 
   $wpdb_update_array = [];
   foreach ($_POST as $key => $value) {
-    if ($key == 'wpmyadminUpdateTrigger') {
+    if ($key === 'wpmyadminUpdateTrigger') {
       continue;
     }
     $wpdb_update_array[$key] = $value;
@@ -24,4 +24,6 @@ if (isset($_POST['wpmyadminUpdateTrigger'])) {
     $wpdb_update_array,
     [$first_key => $first_value]
   );
+
+  wp_safe_redirect(wpmyadmin_get_current_link());
 }

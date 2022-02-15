@@ -8,6 +8,5 @@ if (isset($_POST['wpmyadmin_delete'])) {
   $get_current_link = urlencode($sanitize['get_current_link']);
 
   $deletes = $wpdb->delete($tableName, [$table_key => $table_value]);
-  // wp_safe_redirect($get_current_link);
-  // exit;
+  wp_safe_redirect(wpmyadmin_get_current_link());
 }
