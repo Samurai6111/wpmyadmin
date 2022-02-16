@@ -4,7 +4,7 @@
 /*------------------------------------------------*/
 if (isset($_POST['wpmyadminUpdateTrigger'])) {
   global $wpdb;
-  $table = $_GET['table'];
+  $table = $sanitized_GET['table'];
   $first_key = array_key_first($_POST);
   $first_value = $_POST[$first_key];
 

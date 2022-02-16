@@ -1,5 +1,5 @@
 <?php
-include($wpmyadmin_path . "/controller/wpmyadmin-controller-row.php");
+// include($wpmyadmin_path . "/controller/wpmyadmin-controller-tableRow.php");
 include($wpmyadmin_path . "/model/actions/wpmyadmin-update.php");
 ?>
 
@@ -17,18 +17,18 @@ include($wpmyadmin_path . "/model/actions/wpmyadmin-update.php");
 
     ?>
     <tr class="wpmyadminTable__tr">
-      <th class="wpmyadminTable__head -tal"><?php echo $table_key ?></th>
+      <th class="wpmyadminTable__head -tal"><?php echo esc_html($table_key) ?></th>
       <td class="wpmyadminTable__desc -w100">
 
         <?php if ($letter_count > 200) { ?>
-        <textarea name="<?php echo $table_key ?>"
+        <textarea name="<?php echo esc_attr($table_key) ?>"
                   id=""
                   cols="30"
-                  rows="10"><?php echo $table_value ?></textarea>
+                  rows="10"><?php echo esc_attr($table_value) ?></textarea>
         <?php } else { ?>
         <input type="text"
-               name="<?php echo $table_key ?>"
-               value="<?php echo $table_value ?>">
+               name="<?php echo esc_attr($table_key) ?>"
+               value="<?php echo esc_attr($table_value) ?>">
         <?php } ?>
       </td>
     </tr>

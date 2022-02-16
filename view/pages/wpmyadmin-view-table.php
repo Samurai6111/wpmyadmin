@@ -1,5 +1,5 @@
 <?php
-include($wpmyadmin_path . "/controller/wpmyadmin-controller-table.php");
+// include($wpmyadmin_path . "/controller/wpmyadmin-controller-table.php");
 include($wpmyadmin_path . "/model/wpmyadmin-model-actions.php");
 ?>
 
@@ -9,7 +9,7 @@ include($wpmyadmin_path . "/model/wpmyadmin-model-actions.php");
     <th class="wpmyadminTable__head">action</th>
 
     <?php foreach ($table_cols as $table_colName) { ?>
-    <th class="wpmyadminTable__head"><?php echo $table_colName ?></th>
+    <th class="wpmyadminTable__head"><?php echo esc_html($table_colName) ?></th>
     <?php } ?>
   </tr>
 
@@ -22,7 +22,8 @@ include($wpmyadmin_path . "/model/wpmyadmin-model-actions.php");
       <div class="wpmyadminTable__flex">
 
         <form action="<?php echo wpmyadmin_get_current_link() ?>"
-              method="POST">
+              method="POST"
+              id="tableRowDelete">
           <input type="hidden"
                  name="wpmyadmin_delete">
           <input type="hidden"
@@ -30,26 +31,27 @@ include($wpmyadmin_path . "/model/wpmyadmin-model-actions.php");
                  value="<?php echo wpmyadmin_get_current_link() ?>">
           <input type="hidden"
                  name="table_key"
-                 value="<?php echo $first_key ?>">
+                 value="<?php echo esc_attr($first_key) ?>">
           <input type="hidden"
                  name="table_name"
-                 value="<?php echo $tableName ?>">
+                 value="<?php echo esc_attr($tableName) ?>">
           <input type="hidden"
                  name="table_value"
-                 value="<?php echo $first_value ?>">
+                 value="<?php echo esc_attr($first_value) ?>">
 
-          <button type="submit"
+          <button type="button"
                   class="-error"
-                  onclick="confirm_to_submit()">削除</button>
+                  form="tableRowDelete"
+                  onclick="wpmyadmin_confirm_to_submit(event)">削除</button>
         </form>
 
-        <form action="<?php get_admin_url() ?>"
+        <form action="<?php echo get_admin_url() ?>"
               method="GET">
           <?php wpmyadmin_GETS() ?>
 
           <button type="submit"
-                  name="where[<?php echo $first_key ?>]"
-                  value="<?php echo $first_value ?>">編集</button>
+                  name="where[<?php echo esc_attr($first_key) ?>]"
+                  value="<?php echo esc_attr($first_value) ?>">編集</button>
         </form>
       </div>
     </td>
@@ -57,10 +59,23 @@ include($wpmyadmin_path . "/model/wpmyadmin-model-actions.php");
         $table_value = strip_tags($table_value);
         $table_value = mb_substr($table_value, 0, 100);
       ?>
-    <td class="wpmyadminTable__desc"><?php echo $table_value ?></td>
+    <td class="wpmyadminTable__desc"><?php echo esc_html($table_value) ?></td>
     <?php } ?>
   </tr>
   <?php } ?>
 </table>
 
 <?php wpmyadmin_pagination($page_count) ?>
+
+
+<script>
+function wpmyadmin_confirm_to_submit(e) {
+  (function($) {
+    target = e.target;
+    if (window.confirm("データを削除しますか？")) {
+      formID = $(target).attr("form");
+      $("#" + formID).submit();
+    } else {}
+  })(jQuery);
+}
+</script>

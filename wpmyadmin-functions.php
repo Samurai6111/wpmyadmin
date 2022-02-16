@@ -40,7 +40,11 @@ function wpmyadmin_sanitize_array($array)
   $rtn_array = [];
   if (!empty($array)) {
     foreach ($array as $key => $value) {
-      $rtn_array[$key] = htmlspecialchars($value, ENT_QUOTES);
+      if (!is_array($value)) {
+        $value = trim($value);
+        $value = stripslashes($value);
+        $rtn_array[$key] = htmlspecialchars($value, ENT_QUOTES);
+      }
     }
   }
   return $rtn_array;
@@ -51,9 +55,12 @@ function wpmyadmin_sanitize_array($array)
  *
  * @param $variable 値
  */
-function wpmyadmin_sanitize($variable)
+function wpmyadmin_sanitize($value)
 {
-  return htmlspecialchars($variable);
+  $value = trim($value);
+  $value = stripslashes($value);
+  $value = htmlspecialchars($value);
+  return $value;
 }
 
 
@@ -69,20 +76,21 @@ function wpmyadmin_get_current_link()
 }
 
 /**
- * 現在の$_GETを全て取得しinput[type="hidden"]に変換
+ * 現在の$sanitized_GETを全て取得しinput[type="hidden"]に変換
  *
  * @param $exclude 除外するアイテムのキー
  */
 function wpmyadmin_GETS($exclude = null)
 {
-  foreach ($_GET as $key => $value) {
+  $sanitized_GET = wpmyadmin_sanitize_array($_GET);
+  foreach ($sanitized_GET as $key => $value) {
     if ($key == $exclude) {
       continue;
     }
 ?>
 <input type="hidden"
-       name="<?php echo $key ?>"
-       value="<?php echo $value ?>">
+       name="<?php echo esc_attr($key) ?>"
+       value="<?php echo esc_attr($value) ?>">
 <?php  }
 }
 
@@ -94,20 +102,30 @@ function wpmyadmin_GETS($exclude = null)
  */
 function wpmyadmin_breadcrumb()
 {
+  $sanitized_GET = wpmyadmin_sanitize_array($_GET);
+  $sanitized_where_GET = wpmyadmin_sanitize_array($_GET['where']);
   ?>
 <div class="wpmyadmin_breadcrumb">
-  <a href="<?php echo admin_url() . "?page=wpmyadmin_page" ?>">テーブル一覧</a>
+  <a href="<?php echo esc_url(admin_url() . "?page=wpmyadmin_page") ?>">テーブル一覧</a>
 
-  <?php if (isset($_GET['table'])) { ?>
-  > <a href="<?php echo admin_url() . "?page=wpmyadmin_page&table=" . $_GET['table'] ?>"><?php echo $_GET['table'] ?></a>
+  <?php if (isset($sanitized_GET['table'])) { ?>
+  > <a href="<?php echo esc_url(admin_url() . "?page=wpmyadmin_page&table=" . $sanitized_GET['table']) ?>"><?php echo esc_html($sanitized_GET['table']) ?></a>
   <?php } ?>
 
-  <?php if (isset($_GET['where'])) {
-      $first_key = array_key_first($_GET['where']);
-      $first_value = $_GET['where'][$first_key];
+  <?php if (!empty($sanitized_where_GET)) {
+      $first_key = array_key_first($sanitized_where_GET);
+      $first_value = $sanitized_where_GET[$first_key];
     ?>
-  > <a href="<?php echo admin_url() . "?page=wpmyadmin_page&table=" . $_GET['table'] ?>">
-    <?php echo "where $first_key = $first_value" ?>
+  > <a href="<?php echo esc_url(admin_url() . "?page=wpmyadmin_page&table=" . $sanitized_GET['table']) ?>">
+    <?php
+        $output = "where '";
+        $output .= esc_html($first_key);
+        $output .= "' = '";
+        $output .= esc_html($first_value);
+        $output .= "'";
+        echo $output;
+        ?>
+
   </a>
 
   <?php } ?>
@@ -136,10 +154,12 @@ function wpmyadmin_validation($data)
 function wpmyadmin_pagination($page_count)
 {
   global $limit;
+  $sanitized_GET = wpmyadmin_sanitize_array($_GET);
+  $sanitized_where_GET = wpmyadmin_sanitize_array($_GET['where']);
   $offset = 0;
-  $pages = $_GET['page'];
+  $pages = $sanitized_GET['page'];
   $last = (int)$page_count + 1;
-  $page_num = (isset($_GET['page_num'])) ? (int)$_GET['page_num'] : 1;
+  $page_num = (isset($sanitized_GET['page_num'])) ? (int)$sanitized_GET['page_num'] : 1;
   $prev = (!isset($page_num) || (int)$page_num < 1) ? 1 : (int)$page_num - 1;
   $next = ((int)$page_num == $last) ? $last : (int)$page_num + 1;
 ?>
@@ -151,7 +171,7 @@ function wpmyadmin_pagination($page_count)
   <select class="wpmyadminPagination__select"
           name="page_num">
     <?php for ($l = 1; $l < $last; $l++) { ?>
-    <option <?php echo ($l) == $page_num ? 'selected' : ''; ?>
+    <option <?php echo ($l) == esc_attr($page_num) ? 'selected' : ''; ?>
             value="<?php echo $l ?>"><?php echo $l ?></option>
     <?php } ?>
   </select>
@@ -166,7 +186,7 @@ function wpmyadmin_pagination($page_count)
   <ul class="wpmyadminPagination__list">
     <li class="wpmyadminPagination__listChild">
       <button name="page_num"
-              value="<?php echo $prev ?>">
+              value="<?php echo esc_attr($prev) ?>">
 
         < </button>
     </li>
@@ -201,7 +221,7 @@ function wpmyadmin_pagination($page_count)
 
     <li class="wpmyadminPagination__listChild">
       <button name="page_num"
-              value="<?php echo $next ?>">
+              value="<?php echo esc_attr($next) ?>">
 
         > </button>
     </li>

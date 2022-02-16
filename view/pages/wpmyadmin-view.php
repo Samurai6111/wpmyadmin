@@ -1,17 +1,18 @@
 <div class="wpmyadmin">
   <div class="inner">
-    <a href="<?php echo get_admin_url() . '/?page=wpmyadmin_page' ?>">テーブル一覧へ戻る</a>
+    <a href="<?php echo esc_url(get_admin_url() . '/?page=wpmyadmin_page') ?>">テーブル一覧へ戻る</a>
     <br><br>
 
     <h1>検索フォーム</h1>
     <form action="<?php echo get_admin_url() ?>"
           method="GET">
-      <?php wpmyadmin_GETS() ?>
+      <?php wpmyadmin_GETS();
+      ?>
 
       <input type="hidden"
              name="search_result">
       <input type="text"
-             value="<?php echo esc_attr($_GET['s']) ?>"
+             value="<?php echo esc_attr($sanitized_GET['s']) ?>"
              name="s">
 
       <button type="submit">送信</button>
@@ -21,26 +22,26 @@
 
     global $where_array;
     // ---------- 検索 ----------
-    if (esc_attr($_GET["s"])) {
+    if (esc_attr($sanitized_GET["s"])) {
       include($wpmyadmin_path . "/view/pages/wpmyadmin-view-search.php");
     } else {
       // ---------- 各テーブル 1行 ----------
       if (
-        !empty($where_array) &&
-        esc_attr($_GET["table"]) &&
-        esc_attr($_GET["page"])
+        !empty($sanitized_where_GET) &&
+        esc_attr($sanitized_GET["table"]) &&
+        esc_attr($sanitized_GET["page"])
       ) {
-        include($wpmyadmin_path . "/view/pages/wpmyadmin-view-table-row.php");
+        include($wpmyadmin_path . "/view/pages/wpmyadmin-view-tableRow.php");
       }
       // ---------- 各テーブル ----------
       elseif (
-        esc_attr($_GET["table"]) &&
-        esc_attr($_GET["page"])
+        esc_attr($sanitized_GET["table"]) &&
+        esc_attr($sanitized_GET["page"])
       ) {
         include($wpmyadmin_path . "/view/pages/wpmyadmin-view-table.php");
       }
       // ---------- 初期画面 ----------
-      elseif (esc_attr($_GET["page"])) {
+      elseif (esc_attr($sanitized_GET["page"])) {
 
         include($wpmyadmin_path . "/view/pages/wpmyadmin-view-tables.php");
       }

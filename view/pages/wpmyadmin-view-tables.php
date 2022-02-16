@@ -1,6 +1,5 @@
 <?php
 
-
 ?>
 <h1>テーブル一覧</h1>
 
@@ -11,8 +10,7 @@
 
   <table class="wpmyadminTable">
     <?php
-    global $allTables_array;
-
+    // global $allTables_array;
     foreach ($allTables_array as $tableNames) { ?>
     <tr class="wpmyadminTable__tr">
       <td class="wpmyadminTable__head">
@@ -22,7 +20,7 @@
         <button class="wpmyadmin__formButton"
                 type="submit"
                 name="table"
-                value="<?php echo $tableName ?>"><?php echo $tableName ?></button>
+                value="<?php echo esc_attr($tableName) ?>"><?php echo esc_html($tableName) ?></button>
         <?php } ?>
       </td>
     </tr>
