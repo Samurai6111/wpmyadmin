@@ -9,7 +9,7 @@ Description: Wordpressで管理画面からDBを編集することが出来る�
 Author: Shota Kawakatsu
 Author URI: https://github.com/Samurai6111
 Version: 1.3
-Plugin URI: https://github.com/Samurai6111/my-wpdb
+Plugin URI: https://github.com/Samurai6111/wpmyadmin
 */
 
 /*--------------------------------------------------

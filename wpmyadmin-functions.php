@@ -123,7 +123,7 @@ function wpmyadmin_breadcrumb()
         $output .= "' = '";
         $output .= esc_html($first_value);
         $output .= "'";
-        echo $output;
+        echo esc_html($output);
         ?>
 
   </a>
@@ -207,7 +207,7 @@ function wpmyadmin_pagination($page_count)
 
     <li class="wpmyadminPagination__listChild <?php echo ($page_num == $i) ? '-current' : ''; ?>">
       <button name="page_num"
-              value="<?php echo $i ?>"><?php echo $i ?></button>
+              value="<?php echo esc_attr($i) ?>"><?php echo esc_html($i) ?></button>
     </li>
     <?php } else {
           $b++;

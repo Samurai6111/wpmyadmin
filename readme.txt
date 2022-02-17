@@ -3,7 +3,7 @@ Contributors: Samurai6111
 Tags: wpdb, sql, data, database, db
 Requires at least: 4.9
 Tested up to: 5.9
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0

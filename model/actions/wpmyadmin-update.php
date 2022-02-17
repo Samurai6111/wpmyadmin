@@ -3,16 +3,18 @@
 /* DBの変更
 /*------------------------------------------------*/
 if (isset($_POST['wpmyadminUpdateTrigger'])) {
+  $sanitized_POST = wpmyadmin_sanitize_array($_POST);
+
   global $wpdb;
   $table = $sanitized_GET['table'];
-  $first_key = array_key_first($_POST);
-  $first_value = $_POST[$first_key];
+  $first_key = array_key_first($sanitized_POST);
+  $first_value = $sanitized_POST[$first_key];
 
   // ---------- 最初を削除 ----------
-  $shift = array_shift($_POST);
+  $shift = array_shift($sanitized_POST);
 
   $wpdb_update_array = [];
-  foreach ($_POST as $key => $value) {
+  foreach ($sanitized_POST as $key => $value) {
     if ($key === 'wpmyadminUpdateTrigger') {
       continue;
     }
