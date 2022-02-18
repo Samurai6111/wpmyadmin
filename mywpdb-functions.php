@@ -8,7 +8,7 @@
  *
  * @param $css_file cssファイル名
  */
-function wpmyadmin_css_path($css_file)
+function mywpdb_css_path($css_file)
 {
   return plugins_url('/view/assets/css/' . $css_file, __FILE__);;
 }
@@ -19,7 +19,7 @@ function wpmyadmin_css_path($css_file)
  *
  * @param $array 配列
  */
-function wpmyadmin_escape_array($array)
+function mywpdb_escape_array($array)
 {
   $rtn_array = [];
   if (!empty($array)) {
@@ -35,7 +35,7 @@ function wpmyadmin_escape_array($array)
  *
  * @param $array 配列
  */
-function wpmyadmin_sanitize_array($array)
+function mywpdb_sanitize_array($array)
 {
   $rtn_array = [];
   if (!empty($array)) {
@@ -55,7 +55,7 @@ function wpmyadmin_sanitize_array($array)
  *
  * @param $variable 値
  */
-function wpmyadmin_sanitize($value)
+function mywpdb_sanitize($value)
 {
   $value = trim($value);
   $value = stripslashes($value);
@@ -67,7 +67,7 @@ function wpmyadmin_sanitize($value)
 /**
  * 現在のページのリンクをパラメータ付きで取得
  */
-function wpmyadmin_get_current_link()
+function mywpdb_get_current_link()
 {
 
   $link = is_ssl() ? 'https' : 'http' . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -80,9 +80,9 @@ function wpmyadmin_get_current_link()
  *
  * @param $exclude 除外するアイテムのキー
  */
-function wpmyadmin_GETS($exclude = null)
+function mywpdb_GETS($exclude = null)
 {
-  $sanitized_GET = wpmyadmin_sanitize_array($_GET);
+  $sanitized_GET = mywpdb_sanitize_array($_GET);
   foreach ($sanitized_GET as $key => $value) {
     if ($key == $exclude) {
       continue;
@@ -100,23 +100,23 @@ function wpmyadmin_GETS($exclude = null)
  *
  * @param $
  */
-function wpmyadmin_breadcrumb()
+function mywpdb_breadcrumb()
 {
-  $sanitized_GET = wpmyadmin_sanitize_array($_GET);
-  $sanitized_where_GET = wpmyadmin_sanitize_array($_GET['where']);
+  $sanitized_GET = mywpdb_sanitize_array($_GET);
+  $sanitized_where_GET = mywpdb_sanitize_array($_GET['where']);
   ?>
-<div class="wpmyadmin_breadcrumb">
-  <a href="<?php echo esc_url(admin_url() . "?page=wpmyadmin_page") ?>">テーブル一覧</a>
+<div class="mywpdb_breadcrumb">
+  <a href="<?php echo esc_url(admin_url() . "?page=mywpdb_page") ?>">テーブル一覧</a>
 
   <?php if (isset($sanitized_GET['table'])) { ?>
-  > <a href="<?php echo esc_url(admin_url() . "?page=wpmyadmin_page&table=" . $sanitized_GET['table']) ?>"><?php echo esc_html($sanitized_GET['table']) ?></a>
+  > <a href="<?php echo esc_url(admin_url() . "?page=mywpdb_page&table=" . $sanitized_GET['table']) ?>"><?php echo esc_html($sanitized_GET['table']) ?></a>
   <?php } ?>
 
   <?php if (!empty($sanitized_where_GET)) {
       $first_key = array_key_first($sanitized_where_GET);
       $first_value = $sanitized_where_GET[$first_key];
     ?>
-  > <a href="<?php echo esc_url(admin_url() . "?page=wpmyadmin_page&table=" . $sanitized_GET['table']) ?>">
+  > <a href="<?php echo esc_url(admin_url() . "?page=mywpdb_page&table=" . $sanitized_GET['table']) ?>">
     <?php
         $output = "where '";
         $output .= esc_html($first_key);
@@ -137,7 +137,7 @@ function wpmyadmin_breadcrumb()
 
 
 
-function wpmyadmin_validation($data)
+function mywpdb_validation($data)
 {
   $data = trim($data);
   $data = stripslashes($data);
@@ -151,11 +151,11 @@ function wpmyadmin_validation($data)
  *
  * @param $page_count ページの数
  */
-function wpmyadmin_pagination($page_count)
+function mywpdb_pagination($page_count)
 {
   global $limit;
-  $sanitized_GET = wpmyadmin_sanitize_array($_GET);
-  $sanitized_where_GET = wpmyadmin_sanitize_array($_GET['where']);
+  $sanitized_GET = mywpdb_sanitize_array($_GET);
+  $sanitized_where_GET = mywpdb_sanitize_array($_GET['where']);
   $offset = 0;
   $pages = $sanitized_GET['page'];
   $last = (int)$page_count + 1;
@@ -163,12 +163,12 @@ function wpmyadmin_pagination($page_count)
   $prev = (!isset($page_num) || (int)$page_num < 1) ? 1 : (int)$page_num - 1;
   $next = ((int)$page_num == $last) ? $last : (int)$page_num + 1;
 ?>
-<form class="wpmyadminPagination"
+<form class="mywpdbPagination"
       mehtod="GET"
-      action="<?php echo wpmyadmin_get_current_link() ?>">
-  <?php wpmyadmin_GETS() ?>
+      action="<?php echo mywpdb_get_current_link() ?>">
+  <?php mywpdb_GETS() ?>
 
-  <select class="wpmyadminPagination__select"
+  <select class="mywpdbPagination__select"
           name="page_num">
     <?php for ($l = 1; $l < $last; $l++) { ?>
     <option <?php echo ($l) == esc_attr($page_num) ? 'selected' : ''; ?>
@@ -177,14 +177,14 @@ function wpmyadmin_pagination($page_count)
   </select>
   <script>
   (function($) {
-    $('.wpmyadminPagination__select').on('change', function() {
-      $('.wpmyadminPagination').submit()
+    $('.mywpdbPagination__select').on('change', function() {
+      $('.mywpdbPagination').submit()
     })
   })(jQuery);
   </script>
 
-  <ul class="wpmyadminPagination__list">
-    <li class="wpmyadminPagination__listChild">
+  <ul class="mywpdbPagination__list">
+    <li class="mywpdbPagination__listChild">
       <button name="page_num"
               value="<?php echo esc_attr($prev) ?>">
 
@@ -205,21 +205,21 @@ function wpmyadmin_pagination($page_count)
         ) {
       ?>
 
-    <li class="wpmyadminPagination__listChild <?php echo ($page_num == $i) ? '-current' : ''; ?>">
+    <li class="mywpdbPagination__listChild <?php echo ($page_num == $i) ? '-current' : ''; ?>">
       <button name="page_num"
               value="<?php echo esc_attr($i) ?>"><?php echo esc_html($i) ?></button>
     </li>
     <?php } else {
           $b++;
           if ($b == 4) {
-            echo '<li class="wpmyadminPagination__listChild">...</li>';
+            echo '<li class="mywpdbPagination__listChild">...</li>';
           }
           continue;
         }
       }
       ?>
 
-    <li class="wpmyadminPagination__listChild">
+    <li class="mywpdbPagination__listChild">
       <button name="page_num"
               value="<?php echo esc_attr($next) ?>">
 

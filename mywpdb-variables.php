@@ -4,8 +4,8 @@ global $wpdb;
 /*--------------------------------------------------
 /* 変数
 /*------------------------------------------------*/
-$sanitized_GET = wpmyadmin_sanitize_array($_GET);
-$sanitized_where_GET = wpmyadmin_sanitize_array($_GET['where']);
+$sanitized_GET = mywpdb_sanitize_array($_GET);
+$sanitized_where_GET = mywpdb_sanitize_array($_GET['where']);
 // ---------- $s ----------
 $s = esc_attr($sanitized_GET['s']);
 
@@ -32,7 +32,7 @@ if (esc_attr($sanitized_GET['page'])) {
 if ('GET' === $_SERVER['REQUEST_METHOD']) {
   $page_esc = esc_attr($sanitized_GET["page"]);
   $tableName = esc_attr($sanitized_GET["table"]);
-  $where_array = wpmyadmin_escape_array($sanitized_where_GET);
+  $where_array = mywpdb_escape_array($sanitized_where_GET);
 }
 
 // ---------- 全テーブル一覧 ----------

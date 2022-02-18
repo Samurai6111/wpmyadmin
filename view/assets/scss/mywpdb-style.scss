@@ -12,12 +12,12 @@
 //____________________________
 //スタイル
 //____________________________
-.wpmyadmin {
+.mywpdb {
 	padding: 32px 16px;
 
-	.wpmyadmin__form {
+	.mywpdb__form {
 		// ---------- ボタン ----------
-		.wpmyadmin__formButton {
+		.mywpdb__formButton {
 			display: block;
 			width: 100%;
 			height: 100%;
@@ -26,9 +26,9 @@
 	}
 
 	// ---------- テーブル ----------
-	.wpmyadminTable {
+	.mywpdbTable {
 		// ---------- tr ----------
-		.wpmyadminTable__tr {
+		.mywpdbTable__tr {
 			th ,
 			td {
 				padding: 4px 8px;
@@ -36,7 +36,7 @@
 			}
 
 			// ---------- head ----------
-			.wpmyadminTable__head {
+			.mywpdbTable__head {
 				color: #ffffff;
 				background-color: #000000;
 
@@ -46,8 +46,8 @@
 			}
 
 			// ---------- desc ----------
-			.wpmyadminTable__desc {
-				.wpmyadminTable__flex {
+			.mywpdbTable__desc {
+				.mywpdbTable__flex {
 					@include flex;
 					align-items: center;
 					justify-content: center;
@@ -69,7 +69,7 @@
 }
 
 // ---------- サイドバー ----------
-.wpmyadminSidebar {
+.mywpdbSidebar {
 	position: fixed;
 	top: 50%;
 	right: 0;
@@ -90,7 +90,7 @@
 		cursor: pointer;
 	}
 
-	.wpmyadmin__form {
+	.mywpdb__form {
 		@include flex;
 		align-items: flex-start;
 		flex-direction: column;
@@ -103,16 +103,16 @@
 }
 
 // ---------- ページネーション ----------
-.wpmyadminPagination {
+.mywpdbPagination {
 	@include flex;
 	align-items: center;
 	margin-top: 1.6rem;
 
-	.wpmyadminPagination__select {
+	.mywpdbPagination__select {
 		margin-right: 2.4rem;
 	}
 
-	.wpmyadminPagination__list {
+	.mywpdbPagination__list {
 		@include flex;
 	}
 }

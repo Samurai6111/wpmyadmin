@@ -1,5 +1,5 @@
 <?php
-include($wpmyadmin_path . "/controller/wpmyadmin-controller-search.php");
+include($mywpdb_path . "/controller/mywpdb-controller-search.php");
 ?>
 
 <h1>検索結果ページ</h1>
@@ -39,14 +39,14 @@ if ($s) {
 ?>
         <br>
         <h2>テーブル名 : <?php $tableName ?></h2>
-        <table class="wpmyadminTable">
-          <tr class="wpmyadminTable__tr">
-            <th class="wpmyadminTable__head">
-              <div class="wpmyadminTable__flex">修正</div>
+        <table class="mywpdbTable">
+          <tr class="mywpdbTable__tr">
+            <th class="mywpdbTable__head">
+              <div class="mywpdbTable__flex">修正</div>
             </th>
 
             <?php foreach ($table_cols as $table_colName) { ?>
-              <th class="wpmyadminTable__head"><?php $table_colName ?></th>
+              <th class="mywpdbTable__head"><?php $table_colName ?></th>
             <?php } ?>
           </tr>
 
@@ -54,11 +54,11 @@ if ($s) {
           foreach ($search_results as $table_values) {
             $first_key = array_key_first($table_values);
             $first_value = $table_values[$first_key]; ?>
-            <tr class="wpmyadminTable__tr">
+            <tr class="mywpdbTable__tr">
 
-              <td class="wpmyadminTable__desc">
-                <form class="wpmyadminTable__flex" action="<?php get_admin_url() ?>" method="GET">
-                  <?php wpmyadmin_GETS('search_result') ?>
+              <td class="mywpdbTable__desc">
+                <form class="mywpdbTable__flex" action="<?php get_admin_url() ?>" method="GET">
+                  <?php mywpdb_GETS('search_result') ?>
 
                   <input type="hidden" name="table" value="<?php $tableName ?>">
                   <input type="hidden" name="where[<?php $first_key ?>]" value="<?php $first_value ?>">
@@ -73,7 +73,7 @@ if ($s) {
                 $table_value = mb_substr($table_value, 0, 100);
                 $table_value = str_replace($s, "<b class='-searchHighlight'>$s</b>", $table_value);
               ?>
-                <td class="wpmyadminTable__desc"><?php $table_value ?></td>
+                <td class="mywpdbTable__desc"><?php $table_value ?></td>
               <?php } ?>
             </tr>
           <?php } ?>
